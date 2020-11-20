@@ -1,4 +1,4 @@
-package com.usoftware.marea.controller;
+package com.usoftware.marea.api.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -31,7 +31,7 @@ public class AcaoControllerIntegrationTest {
 	@DisplayName("Deve listar todas ações e retornar status 200")
 	public void shouldListAllAcoes() throws Exception {
 		
-		mvc.perform(get("/api/acao")
+		mvc.perform(get("/marea/api/acao")
 				.contentType(MediaType.APPLICATION_JSON))
 				.andDo(print())
 				.andExpect(status().isOk())

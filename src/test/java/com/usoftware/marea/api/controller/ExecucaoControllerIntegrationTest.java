@@ -25,16 +25,16 @@ import org.springframework.test.web.servlet.MockMvc;
 @SpringBootTest
 @AutoConfigureMockMvc
 @AutoConfigureTestDatabase
-public class AcaoControllerIntegrationTest {
+public class ExecucaoControllerIntegrationTest {
 	
 	@Autowired
 	private MockMvc mvc;
 	
 	@Test
-	@DisplayName("Deve listar todas ações e retornar status 200")
-	public void shouldListAllAcoes() throws Exception {
+	@DisplayName("Deve listar todas execuções e retornar status 200")
+	public void shouldListAllExecucoes() throws Exception {
 		
-		mvc.perform(get("/api/acao")
+		mvc.perform(get("/api/execucao")
 				.contentType(MediaType.APPLICATION_JSON))
 				.andDo(print())
 				.andExpect(status().isOk())
@@ -42,54 +42,54 @@ public class AcaoControllerIntegrationTest {
 	}
 	
 	@Test
-	@DisplayName("Deve retornar uma ação pelo ID e com status 200")
-	public void shouldFindAcaoById() throws Exception {
+	@DisplayName("Deve retornar uma execução pelo ID e com status 200")
+	public void shouldFindExecucaoById() throws Exception {
 		
-		mvc.perform(get("/api/acao/1")
+		mvc.perform(get("/api/execucao/1")
 				.contentType(MediaType.APPLICATION_JSON))
 				.andDo(print())
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
-				.andExpect(content().string("{\"acao_id\":1,\"nome\":\"Bebe beber\",\"descricao\":\"Ação chamada no momento em que o bebe precisa beber\",\"ativo\":true\"}"));
+				.andExpect(content().string("{\"acao_id\":1,\"data_execucao\":\"2020-11-20 04:05\"}"));
 	}
 	
 	@Test
-	@DisplayName("Deve salvar uma ação, retornar status 201 e Location no Header")
-	public void shouldSaveAcao() throws Exception {
+	@DisplayName("Deve salvar uma execução, retornar status 201 e Location no Header")
+	public void shouldSaveExecucao() throws Exception {
 		
-		mvc.perform(post("/api/acao")
+		mvc.perform(post("/api/execucao")
 			.contentType(MediaType.APPLICATION_JSON)
-			.content("{\"nome\":\"Bebe dormir\",\"descricao\":\"Ação chamada no momento em que o bebe precisa dormir\",\"ativo\":false\"}"))
+			.content("{\"acao_id\":1,\"data_execucao\":\"2020-11-20 04:05\"}"))
 			.andDo(print())
 			.andExpect(status().isCreated())
 			.andExpect(header().exists("Location"));
 	}
 	
 	@Test
-	@DisplayName("Deve atualizar uma ação pelo id e retornar status 200")
-	public void shouldUpdateAcao() throws Exception {
+	@DisplayName("Deve atualizar uma execução pelo id e retornar status 200")
+	public void shouldUpdateExecucao() throws Exception {
 		
-		mvc.perform(put("/api/acao/2")
+		mvc.perform(put("/api/execucao/2")
 				.contentType(MediaType.APPLICATION_JSON)
-				.content("{\"nome\":\"Bebe dormir\",\"descricao\":\"Ação chamada no momento em que o bebe precisa beber\",\"ativo\":true\"}"))
+				.content("{\"acao_id\":1,\"data_execucao\":\"2020-11-20 04:05\"}"))
 				.andDo(print())
 				.andExpect(status().isOk());
 	}
 	
 	@Test
-	@DisplayName("Deve deletar uma ação pelo id e retornar status 204")
-	public void shouldDeleteAcaoById() throws Exception {
+	@DisplayName("Deve deletar uma execução pelo id e retornar status 204")
+	public void shouldDeleteExecucaoById() throws Exception {
 		
-		mvc.perform(delete("/api/acao/5")
+		mvc.perform(delete("/api/execucao/5")
 				.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isNoContent());
 	}
 	
 	@Test
-	@DisplayName("NÃ£o deve deletar uma ação associada a produto e retornar status 500")
-	public void shouldNotDeleteAcaoByIdWithConstraints() throws Exception {
+	@DisplayName("NÃ£o deve deletar uma execução associada a produto e retornar status 500")
+	public void shouldNotDeleteExecucaoByIdWithConstraints() throws Exception {
 		
-		mvc.perform(delete("/api/acao/1")
+		mvc.perform(delete("/api/execucao/1")
 				.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isInternalServerError());
 	}
